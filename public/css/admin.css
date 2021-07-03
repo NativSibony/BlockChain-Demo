@@ -1,0 +1,163 @@
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(#dfe2e2, #949e9e);
+  background-attachment: fixed;
+  font-size: 1.25rem;
+}
+
+body {
+  font-family: "Roboto";
+  font-size: 22px;
+  color: #333;
+}
+
+.main {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70%;
+  height: 100%;
+}
+
+.content {
+  background: #bbb;
+  width: 100%;
+}
+
+.header {
+  width: 100%;
+  background: #0f181a;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  min-height: 81px;
+  border-bottom: #c8cccc solid 2px;
+}
+
+.header img {
+  width: 25rem;
+  margin: 15px;
+  justify-self: center;
+  align-self: center;
+}
+
+.links-box {
+  display: flex;
+  align-items: flex-end;
+}
+
+.links {
+  display: flex;
+}
+
+.links li {
+  list-style-type: none;
+}
+
+.links {
+  margin-bottom: 10px;
+  margin-right: 50px;
+}
+
+.links a {
+  border: none;
+  background: transparent;
+  color: #ccc;
+  padding: 8px 1px 8px 1px;
+  margin: 0px 8px 0px 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.links a:hover,
+.links a:focus {
+  background: linear-gradient(transparent 90%, rgba(165, 42, 42, 0.75) 5%);
+}
+
+.links.active a {
+  background: linear-gradient(transparent 90%, rgba(165, 42, 42, 0.75) 5%);
+}
+
+.links {
+  display: flex;
+  column-gap: 10px;
+  align-self: flex-end;
+}
+
+.content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  background: #d9e0e0;
+  border-bottom: #c8cccc solid 2px;
+}
+
+.card {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  color: #ccc;
+  background: linear-gradient(#0f181a, #25373b);
+  border-radius: 5px;
+}
+
+.hash-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group #hash {
+  background: #ccc;
+  cursor: not-allowed;
+  border: none;
+  padding: 6px 9px;
+  border-radius: 5px;
+}
+
+.form-group textarea,
+.form-group textarea:focus {
+  border-radius: 5px;
+  resize: none;
+  outline: none;
+  padding: 5px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 1rem;
+}
+
+.group {
+  width: fit-content;
+}
+
+.footer {
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+  background: #d9e0e0;
+  flex-shrink: 0;
+}
