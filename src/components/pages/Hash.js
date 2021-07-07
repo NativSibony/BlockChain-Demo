@@ -22,9 +22,9 @@ function Hash() {
         <div className="card">
           <form className="hash-form">
             <div className="form-group">
-              <label>Data:</label>
+              <label>Data</label>
               <textarea onChange={handleHash} rows="10" cols="70"></textarea>
-              <label>Hash:</label>
+              <label>Hash</label>
               <input id="hash" type="text" placeholder={sha} disabled></input>
             </div>
           </form>
