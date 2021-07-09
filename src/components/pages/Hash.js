@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { sha256 } from "js-sha256";
+import sha256 from "crypto-js/sha256";
 
 function Hash() {
   const [sha, setSha] = useState("");
 
   useEffect(() => {
-    let s = sha256("");
+    let s = sha256("").toString();
     setSha(s);
   }, []);
 
   const handleHash = (e) => {
-    let s = sha256(e.target.value);
+    let s = sha256(e.target.value).toString();
     setSha(s);
   };
   return (

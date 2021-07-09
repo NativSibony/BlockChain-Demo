@@ -141,7 +141,7 @@ body {
   padding: 5px;
 }
 
-#basic-input {
+.basic-input {
   width: 100%;
   border: none;
   border-radius: 5px;
@@ -165,6 +165,17 @@ body {
   text-align: center;
   background: #d9e0e0;
   flex-shrink: 0;
+}
+
+.mine {
+  background: linear-gradient(#d5f5fc, #b7f2ff);
+  border: none;
+  border-radius: 5px;
+  padding: 8px;
+  margin-top: 20px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 1630px) {

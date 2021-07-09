@@ -8,9 +8,10 @@ import Coinbase from "../pages/Coinbase.js";
 import Blockchain from "../pages/Blockchain.js";
 import Distributed from "../pages/Distributed.js";
 import Tokens from "../pages/Tokens.js";
-
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 function Main() {
+  const blockUrl = process.env.REACT_APP_BLOCK_API;
+  
   return (
     <div className="main">
       <div className="wrapper">
@@ -23,7 +24,7 @@ function Main() {
               <Hash />
             </Route>
             <Route path="/Block">
-              <Block />
+              <Block blockUrl={blockUrl} />
             </Route>
             <Route path="/Blockchain">
               <Blockchain />
