@@ -2,7 +2,7 @@
 
 This project created as part of our studies of crypto currency.
 
-## Available Scripts
+## Run Locally
 
 In the project directory, you can run:
 
