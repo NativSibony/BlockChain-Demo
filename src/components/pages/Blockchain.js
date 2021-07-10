@@ -1,5 +1,5 @@
 import React from "react";
-import BlockchainBlock from "./BlockchainBlock";
+import ChainBlock from "./ChainBlock";
 import ClipLoader from "react-spinners/ClipLoader";
 
 function Blockchain({ chain, mineURL }) {
@@ -7,7 +7,7 @@ function Blockchain({ chain, mineURL }) {
     <div className="Blockchain">
       {chain ? (
         Object.values(chain).map((c, i) => (
-          <BlockchainBlock chain={c} mineURL={mineURL} key={i} />
+          <ChainBlock chain={c} mineURL={mineURL} key={i} />
         ))
       ) : (
         <div className="spinner">

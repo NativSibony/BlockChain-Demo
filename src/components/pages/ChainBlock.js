@@ -3,7 +3,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import sha256 from "crypto-js/sha256";
 import axios from "axios";
 
-export default function BlockchainBlock({ chain, mineURL }) {
+export default function ChainBlock({ chain, mineURL }) {
   const [hash, setHash] = useState("");
   const [prevHash, setPrevHash] = useState("");
   const [nonce, setNonce] = useState("");
