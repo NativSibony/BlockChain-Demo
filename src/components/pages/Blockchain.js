@@ -1,10 +1,8 @@
 import React from "react";
-import BlockchainBlock from "./BlockchainBlock";
+import BlockchainBlock from "../pages/BlockchainBlock";
 import ClipLoader from "react-spinners/ClipLoader";
 
 function Blockchain({ chain, mineURL }) {
-  //
-
   return (
     <div className="Blockchain">
       {chain ? (
