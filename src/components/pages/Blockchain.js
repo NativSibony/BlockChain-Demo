@@ -1,5 +1,5 @@
 import React from "react";
-import BlockchainBlock from "./BlockchainBlock";
+import BlockchainBlock from "./BlockchainBlock.js";
 import ClipLoader from "react-spinners/ClipLoader";
 
 function Blockchain({ chain }) {
