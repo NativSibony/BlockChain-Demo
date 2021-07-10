@@ -12,12 +12,11 @@ function Block({ mineURL }) {
   const [changing, setChanging] = useState(false);
 
   useEffect(() => {
-    if (!loading)
-      setHash(
-        sha256(
-          parseInt(blockNumber) + parseInt(nonce) + JSON.stringify(blockData)
-        ).toString()
-      );
+    setHash(
+      sha256(
+        parseInt(blockNumber) + parseInt(nonce) + JSON.stringify(blockData)
+      ).toString()
+    );
   }, [blockNumber, nonce, blockData]);
 
   const handleChangedFields = (e) => {

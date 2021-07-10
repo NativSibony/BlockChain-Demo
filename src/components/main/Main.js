@@ -22,7 +22,7 @@ function Main() {
       const data = res.data.chain;
       setChain(data);
     });
-  }, [chainURL]);
+  }, []);
 
   return (
     <div className="main">
@@ -39,7 +39,7 @@ function Main() {
               <Block mineURL={mineURL} />
             </Route>
             <Route path="/Blockchain">
-              <Blockchain chain={chain} />
+              <Blockchain chain={chain} mineURL={mineURL} />
             </Route>
             <Route path="/Distributed">
               <Distributed />

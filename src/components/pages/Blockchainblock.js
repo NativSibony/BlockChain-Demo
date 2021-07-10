@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 import sha256 from "crypto-js/sha256";
-// import axios from "axios";
+import axios from "axios";
 
-const BlockchainBlock = ({ chain }) => {
+export default function BlockchainBlock({ chain, mineURL }) {
   const [hash, setHash] = useState("");
   const [prevHash, setPrevHash] = useState("");
   const [nonce, setNonce] = useState("");
@@ -50,11 +50,19 @@ const BlockchainBlock = ({ chain }) => {
   const handleSubmit = (e) => {
     setLoading(true);
     e.preventDefault();
+    axios
+      .get(`${mineURL}?num=${blockNumber}&data=${JSON.stringify(blockData)}`)
+      .then((res) => {
+        const data = res.data;
+        setHash(data.hash);
+        setNonce(data.nonce);
+        setLoading(false);
+        setChanging(false);
+      });
   };
 
   return (
     <div className="content">
-      <ClipLoader color={"#25373b"} loading={loading} size={30} />
       <div className="group">
         <div className="title">
           <h4>SHA256 Hash</h4>
@@ -97,7 +105,7 @@ const BlockchainBlock = ({ chain }) => {
               <input id="hash" type="text" placeholder={hash} disabled></input>
               <button type="submit" className="mine">
                 {loading ? "" : "Mine"}
-                <ClipLoader color={"#25373b"} loading={loading} size={30} />
+                <ClipLoader color={"#25373b"} loading={loading} size={20} />
               </button>
             </div>
           </form>
@@ -105,6 +113,4 @@ const BlockchainBlock = ({ chain }) => {
       </div>
     </div>
   );
-};
-
-export default BlockchainBlock;
+}
