@@ -20,6 +20,29 @@ body {
   font-size: 22px;
   color: #333;
 }
+/*Custom Scroll*/
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #0f181a;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #3e5a61;
+}
 
 .main {
   height: 100%;
@@ -33,7 +56,7 @@ body {
   flex-direction: column;
   align-items: center;
   width: 70%;
-  height: 100%;
+  height: 100vh;
 }
 
 .header {
@@ -115,6 +138,10 @@ body {
   border-radius: 5px;
 }
 
+.card.error {
+  background: linear-gradient(#7a2828, rgb(177, 128, 128));
+}
+
 .hash-form {
   display: flex;
   width: 100%;
@@ -176,6 +203,21 @@ body {
   font-weight: 600;
   font-size: 0.85rem;
   cursor: pointer;
+}
+
+.mine:hover {
+  background: linear-gradient(#26393d, #56848f);
+  color: #b7dce4;
+}
+
+.Blockchain {
+  width: 100%;
+  display: flex;
+  display: inline-flex;
+  overflow-x: scroll;
+}
+.Blockchain > * {
+  min-width: 25em;
 }
 
 @media screen and (max-width: 1630px) {
