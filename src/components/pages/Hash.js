@@ -15,7 +15,7 @@ function Hash() {
   };
   return (
     <div className="content">
-      <div className="group">
+      <div className="group column">
         <div className="title">
           <h4>SHA256 Hash</h4>
         </div>

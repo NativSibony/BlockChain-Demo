@@ -58,7 +58,7 @@ function Block({ mineURL }) {
 
   return (
     <div className="content">
-      <div className="group">
+      <div className="group column">
         <div className="title">
           <h4>SHA256 Hash</h4>
         </div>
@@ -90,7 +90,12 @@ function Block({ mineURL }) {
                 value={blockData}
               ></textarea>
               <label>Hash</label>
-              <input id="hash" type="text" placeholder={hash} disabled></input>
+              <input
+                className="hash"
+                type="text"
+                placeholder={hash}
+                disabled
+              ></input>
               <button type="submit" className="mine">
                 {loading ? "" : "Mine"}
                 <ClipLoader color={"#25373b"} loading={loading} size={25} />

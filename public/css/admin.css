@@ -71,7 +71,8 @@ body {
 }
 
 .header img {
-  width: 25rem;
+  width: 20rem;
+  height: auto;
   margin: 15px;
   justify-self: center;
   align-self: center;
@@ -101,7 +102,7 @@ body {
   color: #ccc;
   padding: 8px 1px 11px 1px;
   margin: 0px 8px 0px 8px;
-  font-weight: 600;
+  font-weight: 100;
   font-size: 1rem;
   cursor: pointer;
   text-decoration: none;
@@ -152,7 +153,36 @@ body {
   flex-basis: auto;
 }
 
-.form-group #hash {
+.form-group {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+  width: 100%;
+}
+
+.group {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  column-gap: 5px;
+}
+
+.group.column {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.group label {
+  flex: 1;
+}
+
+.group textarea,
+.group input {
+  flex: 8;
+}
+
+.form-group .hash,
+.form-group .prev-hash {
   background: #ccc;
   cursor: not-allowed;
   width: 100%;
@@ -184,10 +214,6 @@ body {
   font-size: 0.9rem;
 }
 
-.group {
-  width: fit-content;
-}
-
 .footer {
   width: 100%;
   padding: 10px;
@@ -212,29 +238,35 @@ body {
   color: #b7dce4;
 }
 
-.Blockchain {
+.blockchain,
+.distributed {
   width: 100%;
   height: 100%;
   display: flex;
   display: inline-flex;
   overflow-x: scroll;
+  background: #d9e0e0;
+  border: 10px solid #d9e0e0;
 }
 
-.Blockchain > * {
+.blockchain > * {
   min-width: 25em;
 }
 
 .spinner {
+  display: flex;
   position: absolute;
+  justify-content: center;
   top: 50%;
   left: 50%;
-  transform: translate(-10%, -10%);
+  transform: translateX(-50%);
 }
 
 @media screen and (max-width: 1630px) {
   .header {
     flex-direction: column;
     align-items: center;
+    height: 150px;
   }
   .links {
     margin: 0;

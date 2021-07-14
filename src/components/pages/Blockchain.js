@@ -4,10 +4,12 @@ import ClipLoader from "react-spinners/ClipLoader";
 
 function Blockchain({ chain, mineURL }) {
   return (
-    <div className="Blockchain">
+    <div className="blockchain">
       {chain ? (
         Object.values(chain).map((c, i) => (
-          <ChainBlock chain={c} mineURL={mineURL} key={i} />
+          <div key={i}>
+            <ChainBlock index={i + 1} chain={c} mineURL={mineURL} />
+          </div>
         ))
       ) : (
         <div className="spinner">
