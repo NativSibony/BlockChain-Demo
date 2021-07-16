@@ -3,21 +3,25 @@ import ClipLoader from "react-spinners/ClipLoader";
 import sha256 from "crypto-js/sha256";
 import axios from "axios";
 
-function Block({ mineURL }) {
+function Block({ mineURL, prev }) {
   const [hash, setHash] = useState("");
   const [blockNumber, setBlockNumber] = useState(1);
-  const [nonce, setNonce] = useState(3087);
+  const [nonce, setNonce] = useState(69088);
   const [blockData, setBlockData] = useState("");
   const [loading, setLoading] = useState(false);
   const [changing, setChanging] = useState(false);
 
   useEffect(() => {
+    console.log(prev);
     setHash(
       sha256(
-        parseInt(blockNumber) + parseInt(nonce) + JSON.stringify(blockData)
+        parseInt(blockNumber) +
+          prev +
+          parseInt(nonce) +
+          JSON.stringify(blockData)
       ).toString()
     );
-  }, [blockNumber, nonce, blockData]);
+  }, [blockNumber, nonce, blockData, prev]);
 
   const handleChangedFields = (e) => {
     let value = e.target.value;
@@ -25,17 +29,20 @@ function Block({ mineURL }) {
     if (e.target.id === "blockData") {
       setBlockData(value ? value : "");
       check = sha256(
-        parseInt(blockNumber) + parseInt(nonce) + JSON.stringify(value)
+        parseInt(blockNumber) + parseInt(nonce) + JSON.stringify(value) + "0"
       ).toString();
     } else if (e.target.id === "nonce") {
       setNonce(value);
       check = sha256(
-        parseInt(blockNumber) + parseInt(value) + JSON.stringify(blockData)
+        parseInt(blockNumber) +
+          parseInt(value) +
+          JSON.stringify(blockData) +
+          "0"
       ).toString();
     } else {
       setBlockNumber(value);
       check = sha256(
-        parseInt(value) + parseInt(nonce) + JSON.stringify(blockData)
+        parseInt(value) + parseInt(nonce) + JSON.stringify(blockData) + "0"
       ).toString();
     }
     if (check.substr(0, 4) !== "0000") setChanging(true);
@@ -45,15 +52,14 @@ function Block({ mineURL }) {
   const handleSubmit = (e) => {
     setLoading(true);
     e.preventDefault();
-    axios
-      .get(`${mineURL}?num=${blockNumber}&data=${JSON.stringify(blockData)}`)
-      .then((res) => {
-        const data = res.data;
-        setHash(data.hash);
-        setNonce(data.nonce);
-        setLoading(false);
-        setChanging(false);
-      });
+    axios.get(`${mineURL}?num=${blockNumber}&data=${blockData}`).then((res) => {
+      console.log(res.data);
+      const data = res.data;
+      setHash(data.hash);
+      setNonce(data.nonce);
+      setLoading(false);
+      setChanging(false);
+    });
   };
 
   return (

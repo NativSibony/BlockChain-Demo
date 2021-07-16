@@ -11,7 +11,7 @@ export default function ChainBlock({ index, chain, mineURL }) {
   const [blockNumber, setBlockNumber] = useState("");
   const [blockData, setBlockData] = useState("");
   const [loading, setLoading] = useState(false);
-
+  console.log(chain.previousHash)
   useEffect(() => {
     setBlockNumber(chain.index);
     setHash(chain.hash);
@@ -32,10 +32,10 @@ export default function ChainBlock({ index, chain, mineURL }) {
   }, [blockNumber, nonce, blockData, prevHash]);
 
   const handleChangedFields = (e) => {
-    // let value = e.target.value;
-    // if (e.target.id === "block-data-" + index) setBlockData(value ? value : "");
-    // else if (e.target.id === "nonce-" + index) setNonce(value);
-    // else setBlockNumber(value);
+    let value = e.target.value;
+    if (e.target.id === "block-data-" + index) setBlockData(value ? value : "");
+    else if (e.target.id === "nonce-" + index) setNonce(value);
+    else setBlockNumber(value);
 
     updateChain(index);
   };
@@ -61,7 +61,6 @@ export default function ChainBlock({ index, chain, mineURL }) {
         parseInt(num) + String(prev) + parseInt(nce) + JSON.stringify(bdata)
       ).toString()
     );
-
     updateState(num);
   };
 
@@ -76,17 +75,22 @@ export default function ChainBlock({ index, chain, mineURL }) {
     } else {
       $("#success" + num).addClass(" error");
     }
-    console.log($(".card " + num));
+  };
+
+  const fixeValues = () => {
+    setHash($("#hash-" + index).val());
+    setPrevHash($("#prev-hash-" + index).val());
   };
 
   const handleSubmit = (e) => {
     setLoading(true);
     e.preventDefault();
-    // console.log(blockNumber, JSON.stringify(blockData), prevHash);
+    fixeValues();
+    console.log(blockNumber, JSON.stringify(blockData), prevHash);
     axios
       .get(
         `${mineURL}?num=${blockNumber}&data=${blockData}&prev=${String(
-          prevHash
+          $("#prev-hash-" + index).val()
         )}`
       )
       .then((res) => {
@@ -94,7 +98,7 @@ export default function ChainBlock({ index, chain, mineURL }) {
         setHash(data.hash);
         setNonce(data.nonce);
         setLoading(false);
-        // updateState(index);
+        updateChain(index);
       });
   };
 
@@ -140,7 +144,7 @@ export default function ChainBlock({ index, chain, mineURL }) {
                   className="prev-hash"
                   id={"prev-hash-" + index}
                   type="text"
-                  value={prevHash}
+                  defaultValue={prevHash}
                   disabled
                 ></input>
               </div>
@@ -150,7 +154,7 @@ export default function ChainBlock({ index, chain, mineURL }) {
                   className="hash"
                   id={"hash-" + index}
                   type="text"
-                  value={hash}
+                  defaultValue={hash}
                   disabled
                 ></input>
               </div>

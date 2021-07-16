@@ -36,13 +36,13 @@ function Main() {
               <Hash />
             </Route>
             <Route path="/Block">
-              <Block mineURL={mineURL} />
+              <Block mineURL={mineURL} prev={"0"} />
             </Route>
             <Route path="/Blockchain">
               <Blockchain chain={chain} mineURL={mineURL} />
             </Route>
             <Route path="/Distributed">
-              <Distributed />
+              <Distributed chain={chain} mineURL={mineURL} />
             </Route>
             <Route path="/Coinbase">
               <Coinbase />
