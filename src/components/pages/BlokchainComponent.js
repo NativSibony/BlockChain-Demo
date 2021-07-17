@@ -4,14 +4,14 @@ import sha256 from "crypto-js/sha256";
 import axios from "axios";
 import $ from "jquery";
 
-export default function ChainBlock({ index, chain, mineURL }) {
+export default function BlokchainComponent({ index, chain, mineURL }) {
   const [hash, setHash] = useState("");
   const [prevHash, setPrevHash] = useState("");
   const [nonce, setNonce] = useState("");
   const [blockNumber, setBlockNumber] = useState("");
   const [blockData, setBlockData] = useState("");
   const [loading, setLoading] = useState(false);
-  console.log(chain.previousHash)
+
   useEffect(() => {
     setBlockNumber(chain.index);
     setHash(chain.hash);
@@ -86,7 +86,7 @@ export default function ChainBlock({ index, chain, mineURL }) {
     setLoading(true);
     e.preventDefault();
     fixeValues();
-    console.log(blockNumber, JSON.stringify(blockData), prevHash);
+    // console.log(blockNumber, JSON.stringify(blockData), prevHash);
     axios
       .get(
         `${mineURL}?num=${blockNumber}&data=${blockData}&prev=${String(

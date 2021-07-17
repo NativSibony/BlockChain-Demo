@@ -12,7 +12,6 @@ function Block({ mineURL, prev }) {
   const [changing, setChanging] = useState(false);
 
   useEffect(() => {
-    console.log(prev);
     setHash(
       sha256(
         parseInt(blockNumber) +
@@ -63,51 +62,53 @@ function Block({ mineURL, prev }) {
   };
 
   return (
-    <div className="content">
-      <div className="group column">
-        <div className="title">
-          <h4>SHA256 Hash</h4>
-        </div>
-        <div className={changing ? "card error" : "card"}>
-          <form className="hash-form" onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label>Block</label>
-              <input
-                className="basic-input"
-                type="number"
-                id="blockIndex"
-                onChange={handleChangedFields}
-                value={blockNumber}
-              ></input>
-              <label>Nonce</label>
-              <input
-                className="basic-input"
-                type="number"
-                id="nonce"
-                onChange={handleChangedFields}
-                value={nonce}
-              ></input>
-              <label>Data</label>
-              <textarea
-                id="blockData"
-                rows="10"
-                cols="70"
-                onChange={handleChangedFields}
-                value={blockData}
-              ></textarea>
-              <label>Hash</label>
-              <input
-                className="hash"
-                type="text"
-                placeholder={hash}
-                disabled
-              ></input>
-              <button type="submit" className="mine">
-                {loading ? "" : "Mine"}
-                <ClipLoader color={"#25373b"} loading={loading} size={25} />
-              </button>
-            </div>
-          </form>
+    <div className="blockchain">
+      <div className="content">
+        <div className="group column">
+          <div className="title">
+            <h4>SHA256 Hash</h4>
+          </div>
+          <div className={changing ? "card error" : "card"}>
+            <form className="hash-form" onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label>Block</label>
+                <input
+                  className="basic-input"
+                  type="number"
+                  id="blockIndex"
+                  onChange={handleChangedFields}
+                  value={blockNumber}
+                ></input>
+                <label>Nonce</label>
+                <input
+                  className="basic-input"
+                  type="number"
+                  id="nonce"
+                  onChange={handleChangedFields}
+                  value={nonce}
+                ></input>
+                <label>Data</label>
+                <textarea
+                  id="blockData"
+                  rows="10"
+                  cols="70"
+                  onChange={handleChangedFields}
+                  value={blockData}
+                ></textarea>
+                <label>Hash</label>
+                <input
+                  className="hash"
+                  type="text"
+                  placeholder={hash}
+                  disabled
+                ></input>
+                <button type="submit" className="mine">
+                  {loading ? "" : "Mine"}
+                  <ClipLoader color={"#25373b"} loading={loading} size={25} />
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>

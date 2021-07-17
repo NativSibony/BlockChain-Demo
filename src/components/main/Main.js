@@ -13,14 +13,19 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 const mineURL = "https://demo-blockchain-backend.herokuapp.com/mine";
 const chainURL = "https://demo-blockchain-backend.herokuapp.com/chain";
-
+const tokensURL = "http://localhost:3001/tokens";
 function Main() {
   const [chain, setChain] = useState("");
+  const [tokens, setTokens] = useState("");
 
   useEffect(() => {
     axios.get(`${chainURL}`).then((res) => {
       const data = res.data.chain;
       setChain(data);
+    });
+    axios.get(`${tokensURL}`).then((res) => {
+      const data = res.data;
+      setTokens(data.chain);
     });
   }, []);
 
@@ -44,14 +49,15 @@ function Main() {
             <Route path="/Distributed">
               <Distributed chain={chain} mineURL={mineURL} />
             </Route>
+            <Route path="/Tokens">
+              <Tokens tokens={tokens} tokensURL={tokensURL} />
+            </Route>
             <Route path="/Coinbase">
               <Coinbase />
             </Route>
-            <Route path="/Tokens">
-              <Tokens />
-            </Route>
             <Route path="/">
-              <Home />
+              <Hash />
+              {/* <Home /> */}
             </Route>
           </Switch>
         </Router>

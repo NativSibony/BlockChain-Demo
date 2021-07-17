@@ -1,5 +1,5 @@
 import React from "react";
-import ChainBlock from "./ChainBlock";
+import BlokchainComponent from "./BlokchainComponent";
 import ClipLoader from "react-spinners/ClipLoader";
 
 function Distributed({ chain, mineURL }) {
@@ -9,7 +9,7 @@ function Distributed({ chain, mineURL }) {
         {chain ? (
           Object.values(chain).map((c, i) => (
             <div key={i}>
-              <ChainBlock index={i + 1} chain={c} mineURL={mineURL} />
+              <BlokchainComponent index={i + 1} chain={c} mineURL={mineURL} />
             </div>
           ))
         ) : (
@@ -22,7 +22,7 @@ function Distributed({ chain, mineURL }) {
         {chain ? (
           Object.values(chain).map((c, i) => (
             <div key={i}>
-              <ChainBlock index={i + 1} chain={c} mineURL={mineURL} />
+              <BlokchainComponent index={i + 1} chain={c} mineURL={mineURL} />
             </div>
           ))
         ) : (
@@ -33,7 +33,7 @@ function Distributed({ chain, mineURL }) {
         {chain ? (
           Object.values(chain).map((c, i) => (
             <div key={i}>
-              <ChainBlock index={i + 1} chain={c} mineURL={mineURL} />
+              <BlokchainComponent index={i + 1} chain={c} mineURL={mineURL} />
             </div>
           ))
         ) : (
