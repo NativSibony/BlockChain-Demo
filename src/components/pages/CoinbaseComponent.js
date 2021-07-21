@@ -4,7 +4,12 @@ import sha256 from "crypto-js/sha256";
 import axios from "axios";
 import $ from "jquery";
 
-export default function BlokchainComponent({ index, row, chain, mineURL }) {
+export default function CoinbaseComponent({
+  index,
+  row,
+  coinbase,
+  mineTokenURL,
+}) {
   const [hash, setHash] = useState("");
   const [prevHash, setPrevHash] = useState("");
   const [nonce, setNonce] = useState("");
@@ -13,12 +18,12 @@ export default function BlokchainComponent({ index, row, chain, mineURL }) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setBlockNumber(chain.index);
-    setHash(chain.hash);
-    setNonce(chain.nonce);
-    setPrevHash(chain.previousHash);
-    setBlockData(chain.data);
-  }, [chain]);
+    setBlockNumber(coinbase.index);
+    setHash(coinbase.hash);
+    setNonce(coinbase.nonce);
+    setPrevHash(coinbase.previousHash);
+    setBlockData(coinbase.data);
+  }, [coinbase]);
 
   useEffect(() => {
     setHash(
@@ -33,27 +38,38 @@ export default function BlokchainComponent({ index, row, chain, mineURL }) {
 
   const handleChangedFields = (e) => {
     let value = e.target.value;
-    if (e.target.id === "block-data-" + index + "-row-" + row)
-      setBlockData(value ? value : "");
-    else if (e.target.id === "nonce-" + index + "-row-" + row) setNonce(value);
+    if (
+      e.target.parentNode.parentNode.id ===
+      "block-data-" + index + "-row-" + row
+    ) {
+      handleBlockData(e.target.name, e.target.id, e.target.value);
+    } else if (e.target.id === "nonce-" + index + "-row-" + row)
+      setNonce(value);
     else setBlockNumber(value);
 
-    updateChain(index);
+    updatetokens(index);
   };
 
-  const updateChain = (index) => {
-    for (var x = index; x <= 5; x++) {
+  const handleBlockData = (name, i, value) => {
+    let obj = blockData;
+    obj[i][name] = name === "amount" ? parseInt(value) : value;
+    setBlockData(obj);
+
+    $("#block-data-" + index + "-row-" + row).attr("name", JSON.stringify(obj));
+  };
+
+  const updatetokens = (index) => {
+    for (var x = index; x <= 3; x++) {
       if (x > 1) {
         $("#prev-hash-" + x + "-row-" + row).val(
           $("#hash-" + (x - 1) + "-row-" + row).val()
         );
       }
-      // console.log();
       updateHash(
         x,
         $("#prev-hash-" + x + "-row-" + row).val(),
         $("#nonce-" + x + "-row-" + row).val(),
-        $("#block-data-" + x + "-row-" + row).val()
+        $("#block-data-" + x + "-row-" + row).attr("name")
       );
     }
   };
@@ -63,9 +79,9 @@ export default function BlokchainComponent({ index, row, chain, mineURL }) {
     $("#hash-" + num + "-row-" + row).val(
       sha256(
         parseInt($("#block-num-" + num + "-row-" + row).val()) +
-          prev +
+          String(prev) +
           parseInt(nce) +
-          JSON.stringify(bdata)
+          bdata
       ).toString()
     );
     updateState(num);
@@ -96,16 +112,16 @@ export default function BlokchainComponent({ index, row, chain, mineURL }) {
     // console.log(blockNumber, JSON.stringify(blockData), prevHash);
     axios
       .get(
-        `${mineURL}?num=${blockNumber}&data=${blockData}&prev=${String(
-          $("#prev-hash-" + index + "-row-" + row).val()
-        )}`
+        `${mineTokenURL}?num=${blockNumber}&data=${JSON.stringify(
+          blockData
+        )}&prev=${String($("#prev-hash-" + index + "-row-" + row).val())}`
       )
       .then((res) => {
         const data = res.data;
         setHash(data.hash);
         setNonce(data.nonce);
         setLoading(false);
-        updateChain(index);
+        updatetokens(index);
       });
   };
 
@@ -138,16 +154,65 @@ export default function BlokchainComponent({ index, row, chain, mineURL }) {
                 ></input>
               </div>
               <div className="group">
-                <label htmlFor={"block-data-" + index + "-row-" + row}>
-                  Data
+                <label htmlFor={"block-tokens-" + index + "-row-" + row}>
+                  TX
                 </label>
-                <textarea
-                  type="text"
+                <div
+                  className="small-group"
                   id={"block-data-" + index + "-row-" + row}
-                  rows="10"
-                  cols="70"
                   onChange={handleChangedFields}
-                ></textarea>
+                  name={JSON.stringify(blockData)}
+                >
+                  {Object.values(blockData).map((d, i) =>
+                    d.from !== "shlomi" ? (
+                      <div key={i} className="small-group-group">
+                        <label className="lbl-gray">$</label>
+                        <input
+                          type="number"
+                          name="amount"
+                          id={i}
+                          className="basic-input"
+                          defaultValue={d.amount}
+                        ></input>
+                        <label className="lbl-gray">From</label>
+                        <input
+                          type="text"
+                          name="from"
+                          id={i}
+                          className="basic-input"
+                          defaultValue={d.from}
+                        ></input>
+                        <label className="lbl-gray">To</label>
+                        <input
+                          type="text"
+                          name="to"
+                          id={i}
+                          className="basic-input"
+                          defaultValue={d.to}
+                        ></input>
+                      </div>
+                    ) : (
+                      <div key={i} className="small-group-group">
+                        <label className="lbl-gray">From</label>
+                        <input
+                          type="text"
+                          name="from"
+                          id={i}
+                          className="basic-input"
+                          defaultValue={d.from}
+                        ></input>
+                        <label className="lbl-gray">To</label>
+                        <input
+                          type="number"
+                          name="to"
+                          id={i}
+                          className="basic-input"
+                          defaultValue={d.to}
+                        ></input>
+                      </div>
+                    )
+                  )}
+                </div>
               </div>
               <div className="group">
                 <label htmlFor={"prev-hash-" + index + "-row-" + row}>
@@ -171,7 +236,6 @@ export default function BlokchainComponent({ index, row, chain, mineURL }) {
                   disabled
                 ></input>
               </div>
-
               <div>
                 <button type="submit" className="mine">
                   {loading ? "" : "Mine"}

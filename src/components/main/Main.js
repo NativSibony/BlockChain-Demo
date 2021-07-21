@@ -14,9 +14,13 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 const mineURL = "http://localhost:3001/mine";
 const chainURL = "http://localhost:3001/chain";
 const tokensURL = "http://localhost:3001/tokens";
+const mineTokenURL = "http://localhost:3001/mineToken";
+const coinbaseURL = "http://localhost:3001/coinbase";
+
 function Main() {
   const [chain, setChain] = useState("");
   const [tokens, setTokens] = useState("");
+  const [coinbase, setCoinbase] = useState("");
 
   useEffect(() => {
     axios.get(`${chainURL}`).then((res) => {
@@ -26,6 +30,10 @@ function Main() {
     axios.get(`${tokensURL}`).then((res) => {
       const data = res.data;
       setTokens(data.chain);
+    });
+    axios.get(`${coinbaseURL}`).then((res) => {
+      const data = res.data;
+      setCoinbase(data.chain);
     });
   }, []);
 
@@ -50,10 +58,10 @@ function Main() {
               <Distributed chain={chain} mineURL={mineURL} />
             </Route>
             <Route path="/Tokens">
-              <Tokens tokens={tokens} tokensURL={tokensURL} />
+              <Tokens tokens={tokens} mineTokenURL={mineTokenURL} />
             </Route>
             <Route path="/Coinbase">
-              <Coinbase />
+              <Coinbase coinbase={coinbase} mineTokenURL={mineTokenURL} />
             </Route>
             <Route path="/">
               <Hash />

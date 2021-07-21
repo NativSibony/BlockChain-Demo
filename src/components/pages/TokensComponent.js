@@ -4,7 +4,7 @@ import sha256 from "crypto-js/sha256";
 import axios from "axios";
 import $ from "jquery";
 
-export default function TokensComponent({ index, row, tokens, mineURL }) {
+export default function TokensComponent({ index, row, tokens, mineTokenURL }) {
   const [hash, setHash] = useState("");
   const [prevHash, setPrevHash] = useState("");
   const [nonce, setNonce] = useState("");
@@ -33,12 +33,24 @@ export default function TokensComponent({ index, row, tokens, mineURL }) {
 
   const handleChangedFields = (e) => {
     let value = e.target.value;
-    if (e.target.id === "block-data-" + index + "-row-" + row)
-      setBlockData(value ? value : "");
-    else if (e.target.id === "nonce-" + index + "-row-" + row) setNonce(value);
+    if (
+      e.target.parentNode.parentNode.id ===
+      "block-data-" + index + "-row-" + row
+    ) {
+      handleBlockData(e.target.name, e.target.id, e.target.value);
+    } else if (e.target.id === "nonce-" + index + "-row-" + row)
+      setNonce(value);
     else setBlockNumber(value);
 
     updatetokens(index);
+  };
+
+  const handleBlockData = (name, i, value) => {
+    let obj = blockData;
+    obj[i][name] = name === "amount" ? parseInt(value) : value;
+    setBlockData(obj);
+
+    $("#block-data-" + index + "-row-" + row).attr("name", JSON.stringify(obj));
   };
 
   const updatetokens = (index) => {
@@ -52,17 +64,19 @@ export default function TokensComponent({ index, row, tokens, mineURL }) {
         x,
         $("#prev-hash-" + x + "-row-" + row).val(),
         $("#nonce-" + x + "-row-" + row).val(),
-        $("#block-data-" + x + "-row-" + row).val()
+        $("#block-data-" + x + "-row-" + row).attr("name")
       );
     }
   };
 
   const updateHash = (num, prev, nce, bdata) => {
     // update the SHA256 hash value for this block
-    console.log(num, prev, nce, bdata);
     $("#hash-" + num + "-row-" + row).val(
       sha256(
-        parseInt(num) + String(prev) + parseInt(nce) + JSON.stringify(bdata)
+        parseInt($("#block-num-" + num + "-row-" + row).val()) +
+          String(prev) +
+          parseInt(nce) +
+          bdata
       ).toString()
     );
     updateState(num);
@@ -90,12 +104,12 @@ export default function TokensComponent({ index, row, tokens, mineURL }) {
     setLoading(true);
     e.preventDefault();
     fixeValues();
-    console.log(blockNumber, JSON.stringify(blockData), prevHash);
+    // console.log(blockNumber, JSON.stringify(blockData), prevHash);
     axios
       .get(
-        `${mineURL}?num=${blockNumber}&data=${blockData}&prev=${String(
-          $("#prev-hash-" + index + "-row-" + row).val()
-        )}`
+        `${mineTokenURL}?num=${blockNumber}&data=${JSON.stringify(
+          blockData
+        )}&prev=${String($("#prev-hash-" + index + "-row-" + row).val())}`
       )
       .then((res) => {
         const data = res.data;
@@ -138,25 +152,36 @@ export default function TokensComponent({ index, row, tokens, mineURL }) {
                 <label htmlFor={"block-tokens-" + index + "-row-" + row}>
                   TX
                 </label>
-                <div className="small-group">
+                <div
+                  className="small-group"
+                  id={"block-data-" + index + "-row-" + row}
+                  onChange={handleChangedFields}
+                  name={JSON.stringify(blockData)}
+                >
                   {Object.values(blockData).map((d, i) => {
                     return (
                       <div key={i} className="small-group-group">
                         <label className="lbl-gray">$</label>
                         <input
                           type="number"
+                          name="amount"
+                          id={i}
                           className="basic-input"
                           defaultValue={d.amount}
                         ></input>
                         <label className="lbl-gray">From</label>
                         <input
                           type="text"
+                          name="from"
+                          id={i}
                           className="basic-input"
                           defaultValue={d.from}
                         ></input>
                         <label className="lbl-gray">To</label>
                         <input
                           type="text"
+                          name="to"
+                          id={i}
                           className="basic-input"
                           defaultValue={d.to}
                         ></input>

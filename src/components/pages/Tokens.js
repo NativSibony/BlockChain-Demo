@@ -2,7 +2,7 @@ import React from "react";
 import TokensComponent from "./TokensComponent";
 import ClipLoader from "react-spinners/ClipLoader";
 
-function Tokens({ tokens, mineURL }) {
+function Tokens({ tokens, mineTokenURL }) {
   return (
     <>
       <div className="tokens">
@@ -13,7 +13,7 @@ function Tokens({ tokens, mineURL }) {
                 index={i + 1}
                 row={1}
                 tokens={c}
-                mineURL={mineURL}
+                mineTokenURL={mineTokenURL}
               />
             </div>
           ))
@@ -31,7 +31,7 @@ function Tokens({ tokens, mineURL }) {
                 index={i + 1}
                 row={2}
                 tokens={c}
-                mineURL={mineURL}
+                mineTokenURL={mineTokenURL}
               />
             </div>
           ))
@@ -47,7 +47,7 @@ function Tokens({ tokens, mineURL }) {
                 index={i + 1}
                 row={3}
                 tokens={c}
-                mineURL={mineURL}
+                mineTokenURL={mineTokenURL}
               />
             </div>
           ))
