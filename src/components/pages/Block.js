@@ -28,22 +28,23 @@ function Block({ mineURL, prev }) {
     if (e.target.id === "blockData") {
       setBlockData(value ? value : "");
       check = sha256(
-        parseInt(blockNumber) + parseInt(nonce) + JSON.stringify(value) + "0"
+        parseInt(blockNumber) + prev + parseInt(nonce) + JSON.stringify(value)
       ).toString();
     } else if (e.target.id === "nonce") {
       setNonce(value);
       check = sha256(
         parseInt(blockNumber) +
+          prev +
           parseInt(value) +
-          JSON.stringify(blockData) +
-          "0"
+          JSON.stringify(blockData)
       ).toString();
     } else {
       setBlockNumber(value);
       check = sha256(
-        parseInt(value) + parseInt(nonce) + JSON.stringify(blockData) + "0"
+        parseInt(value) + prev + parseInt(nonce) + JSON.stringify(blockData)
       ).toString();
     }
+    console.log(check);
     if (check.substr(0, 4) !== "0000") setChanging(true);
     else setChanging(false);
   };
@@ -52,7 +53,6 @@ function Block({ mineURL, prev }) {
     setLoading(true);
     e.preventDefault();
     axios.get(`${mineURL}?num=${blockNumber}&data=${blockData}`).then((res) => {
-      console.log(res.data);
       const data = res.data;
       setHash(data.hash);
       setNonce(data.nonce);

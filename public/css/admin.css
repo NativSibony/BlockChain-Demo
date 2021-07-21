@@ -280,6 +280,9 @@ body {
   min-width: 25em;
 }
 
+.coinbase > * {
+  min-width: 25em;
+}
 .tokens > * {
   min-width: 25em;
 }
