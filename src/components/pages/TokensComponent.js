@@ -4,14 +4,13 @@ import sha256 from "crypto-js/sha256";
 import axios from "axios";
 import $ from "jquery";
 
-export default function TokensComponent({ index, tokens, mineURL }) {
+export default function TokensComponent({ index, row, tokens, mineURL }) {
   const [hash, setHash] = useState("");
   const [prevHash, setPrevHash] = useState("");
   const [nonce, setNonce] = useState("");
   const [blockNumber, setBlockNumber] = useState("");
   const [blockData, setBlockData] = useState("");
   const [loading, setLoading] = useState(false);
-  //   const [transactions, setTransactions] = useState("");
 
   useEffect(() => {
     setBlockNumber(tokens.index);
@@ -19,7 +18,6 @@ export default function TokensComponent({ index, tokens, mineURL }) {
     setNonce(tokens.nonce);
     setPrevHash(tokens.previousHash);
     setBlockData(tokens.data);
-    // setTransactions(tokens.data);
   }, [tokens]);
 
   useEffect(() => {
@@ -35,30 +33,34 @@ export default function TokensComponent({ index, tokens, mineURL }) {
 
   const handleChangedFields = (e) => {
     let value = e.target.value;
-    if (e.target.id === "block-data-" + index) setBlockData(value ? value : "");
-    else if (e.target.id === "nonce-" + index) setNonce(value);
+    if (e.target.id === "block-data-" + index + "-row-" + row)
+      setBlockData(value ? value : "");
+    else if (e.target.id === "nonce-" + index + "-row-" + row) setNonce(value);
     else setBlockNumber(value);
 
     updatetokens(index);
   };
 
   const updatetokens = (index) => {
-    for (var x = index; x <= 5; x++) {
+    for (var x = index; x <= 3; x++) {
       if (x > 1) {
-        $("#prev-hash-" + x).val($("#hash-" + (x - 1)).val());
+        $("#prev-hash-" + x + "-row-" + row).val(
+          $("#hash-" + (x - 1) + "-row-" + row).val()
+        );
       }
       updateHash(
         x,
-        $("#prev-hash-" + x).val(),
-        $("#nonce-" + x).val(),
-        $("#block-data-" + x).val()
+        $("#prev-hash-" + x + "-row-" + row).val(),
+        $("#nonce-" + x + "-row-" + row).val(),
+        $("#block-data-" + x + "-row-" + row).val()
       );
     }
   };
 
   const updateHash = (num, prev, nce, bdata) => {
     // update the SHA256 hash value for this block
-    $("#hash-" + num).val(
+    console.log(num, prev, nce, bdata);
+    $("#hash-" + num + "-row-" + row).val(
       sha256(
         parseInt(num) + String(prev) + parseInt(nce) + JSON.stringify(bdata)
       ).toString()
@@ -69,19 +71,19 @@ export default function TokensComponent({ index, tokens, mineURL }) {
   const updateState = (num) => {
     // set the well background red or green for this block
     if (
-      $("#hash-" + num)
+      $("#hash-" + num + "-row-" + row)
         .val()
         .substr(0, 4) === "0000"
     ) {
-      $("#success" + num).removeClass(" error");
+      $("#success" + num + "-row-" + row).removeClass(" error");
     } else {
-      $("#success" + num).addClass(" error");
+      $("#success" + num + "-row-" + row).addClass(" error");
     }
   };
 
   const fixeValues = () => {
-    setHash($("#hash-" + index).val());
-    setPrevHash($("#prev-hash-" + index).val());
+    setHash($("#hash-" + index + "-row-" + row).val());
+    setPrevHash($("#prev-hash-" + index + "-row-" + row).val());
   };
 
   const handleSubmit = (e) => {
@@ -92,7 +94,7 @@ export default function TokensComponent({ index, tokens, mineURL }) {
     axios
       .get(
         `${mineURL}?num=${blockNumber}&data=${blockData}&prev=${String(
-          $("#prev-hash-" + index).val()
+          $("#prev-hash-" + index + "-row-" + row).val()
         )}`
       )
       .then((res) => {
@@ -103,83 +105,83 @@ export default function TokensComponent({ index, tokens, mineURL }) {
         updatetokens(index);
       });
   };
-  if (tokens.data === "") return <div style={{ display: "none" }}></div>;
+
   return (
     <div className="content">
       <div className="group">
-        <div className="card" id={"success" + index}>
+        <div className="card" id={"success" + index + "-row-" + row}>
           <form className="hash-form" onSubmit={handleSubmit}>
             <div className="form-group">
               <div className="group">
-                <label htmlFor={"block-num-" + index}>Block</label>
+                <label htmlFor={"block-num-" + index + "-row-" + row}>
+                  Block
+                </label>
                 <input
                   type="number"
-                  id={"block-num-" + index}
+                  id={"block-num-" + index + "-row-" + row}
                   value={blockNumber}
                   className="basic-input"
                   onChange={handleChangedFields}
                 ></input>
               </div>
               <div className="group">
-                <label htmlFor={"nonce-" + index}>Nonce</label>
+                <label htmlFor={"nonce-" + index + "-row-" + row}>Nonce</label>
                 <input
                   className="basic-input"
                   type="number"
-                  id={"nonce-" + index}
+                  id={"nonce-" + index + "-row-" + row}
                   onChange={handleChangedFields}
                   value={nonce}
                 ></input>
               </div>
               <div className="group">
-                <label htmlFor={"block-tokens-" + index}>TX</label>
+                <label htmlFor={"block-tokens-" + index + "-row-" + row}>
+                  TX
+                </label>
                 <div className="small-group">
-                  {Object.values(blockData).map((d, i) => (
-                    <div key={i} className="small-group-group">
-                      <label className="lbl-gray">$</label>
-                      <input
-                        type="number"
-                        className="basic-input"
-                        defaultValue={d.amount}
-                      ></input>
-                      <label className="lbl-gray">From</label>
-                      <input
-                        type="text"
-                        className="basic-input"
-                        defaultValue={d.from}
-                      ></input>
-                      <label className="lbl-gray">To</label>
-                      <input
-                        type="text"
-                        className="basic-input"
-                        defaultValue={d.to}
-                      ></input>
-                    </div>
-                  ))}
-                  {/* <div className="small-group-group">
-                    <label className="lbl-gray">$</label>
-                    <input type="text" className="basic-input"></input>
-                    <label className="lbl-gray">From</label>
-                    <input type="text" className="basic-input"></input>
-                    <label className="lbl-gray">To</label>
-                    <input type="text" className="basic-input"></input>
-                  </div> */}
+                  {Object.values(blockData).map((d, i) => {
+                    return (
+                      <div key={i} className="small-group-group">
+                        <label className="lbl-gray">$</label>
+                        <input
+                          type="number"
+                          className="basic-input"
+                          defaultValue={d.amount}
+                        ></input>
+                        <label className="lbl-gray">From</label>
+                        <input
+                          type="text"
+                          className="basic-input"
+                          defaultValue={d.from}
+                        ></input>
+                        <label className="lbl-gray">To</label>
+                        <input
+                          type="text"
+                          className="basic-input"
+                          defaultValue={d.to}
+                        ></input>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
               <div className="group">
-                <label htmlFor={"prev-hash-" + index}>Prev</label>
+                <label htmlFor={"prev-hash-" + index + "-row-" + row}>
+                  Prev
+                </label>
                 <input
                   className="prev-hash"
-                  id={"prev-hash-" + index}
+                  id={"prev-hash-" + index + "-row-" + row}
                   type="text"
                   defaultValue={prevHash}
                   disabled
                 ></input>
               </div>
               <div className="group">
-                <label htmlFor={"hash-" + index}>Hash</label>
+                <label htmlFor={"hash-" + index + "-row-" + row}>Hash</label>
                 <input
                   className="hash"
-                  id={"hash-" + index}
+                  id={"hash-" + index + "-row-" + row}
                   type="text"
                   defaultValue={hash}
                   disabled

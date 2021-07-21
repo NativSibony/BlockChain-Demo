@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Header from "../partials/Header.js";
 import Footer from "../partials/Footer.js";
 import Hash from "../pages/Hash.js";
-import Home from "../pages/Home.js";
+// import Home from "../pages/Home.js";
 import Block from "../pages/Block.js";
 import Coinbase from "../pages/Coinbase.js";
 import Blockchain from "../pages/Blockchain.js";
@@ -11,8 +11,8 @@ import Tokens from "../pages/Tokens.js";
 import axios from "axios";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-const mineURL = "https://demo-blockchain-backend.herokuapp.com/mine";
-const chainURL = "https://demo-blockchain-backend.herokuapp.com/chain";
+const mineURL = "http://localhost:3001/mine";
+const chainURL = "http://localhost:3001/chain";
 const tokensURL = "http://localhost:3001/tokens";
 function Main() {
   const [chain, setChain] = useState("");

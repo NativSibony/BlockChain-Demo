@@ -8,7 +8,12 @@ function Blockchain({ chain, mineURL }) {
       {chain ? (
         Object.values(chain).map((c, i) => (
           <div key={i}>
-            <BlokchainComponent index={i + 1} chain={c} mineURL={mineURL} />
+            <BlokchainComponent
+              index={i + 1}
+              row={1}
+              chain={c}
+              mineURL={mineURL}
+            />
           </div>
         ))
       ) : (

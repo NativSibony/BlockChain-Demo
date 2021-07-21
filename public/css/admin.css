@@ -9,7 +9,7 @@
 html,
 body {
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   background: linear-gradient(#dfe2e2, #949e9e);
   background-attachment: fixed;
   font-size: 1.25rem;
@@ -18,7 +18,7 @@ body {
 body {
   font-family: "Roboto";
   font-size: 22px;
-  height: 100vh;
+  min-height: 100vh;
   color: #333;
 }
 /*Custom Scroll*/
@@ -231,7 +231,7 @@ body {
 }
 
 .form-group label {
-  font-size: 0.9rem;
+  font-size: 0.7rem;
 }
 
 .footer {
