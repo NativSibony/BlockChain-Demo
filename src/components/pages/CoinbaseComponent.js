@@ -164,7 +164,7 @@ export default function CoinbaseComponent({
                   name={JSON.stringify(blockData)}
                 >
                   {Object.values(blockData).map((d, i) =>
-                    d.from !== "shlomi" ? (
+                    d.amount ? (
                       <div key={i} className="small-group-group">
                         <label className="lbl-gray">$</label>
                         <input
