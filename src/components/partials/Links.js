@@ -64,6 +64,21 @@ const Links = () => {
             Coinbase
           </Link>
         </li>
+        <li>
+          <Link className="link" id="Keys" onClick={handleActive} to="/Keys">
+            Keys
+          </Link>
+        </li>
+        <li>
+          <Link
+            className="link"
+            id="Signature"
+            onClick={handleActive}
+            to="/Signature"
+          >
+            Signature
+          </Link>
+        </li>
       </ul>
     </nav>
   );

@@ -94,15 +94,15 @@ body {
 
 .links {
   margin-bottom: 10px;
-  margin-right: 50px;
+  margin-right: 5px;
 }
 
 .links a {
   border: none;
   background: transparent;
   color: #ccc;
-  padding: 8px 1px 11px 1px;
-  margin: 0px 8px 0px 8px;
+  padding: 4px 1px 6px 1px;
+  margin: 0px 4px 0px 4px;
   font-weight: 100;
   font-size: 1rem;
   cursor: pointer;
@@ -120,7 +120,7 @@ body {
 
 .links {
   display: flex;
-  column-gap: 10px;
+  column-gap: 5px;
   align-self: flex-end;
 }
 
@@ -192,6 +192,7 @@ body {
 
 .small-group-group {
   display: flex;
+  align-items: center;
 }
 
 .lbl-gray {
@@ -199,9 +200,12 @@ body {
   background: #ccc;
   border-radius: 5px;
   padding: 5px;
+  text-align: center;
 }
 
 .form-group .hash,
+.form-group .private-key,
+.form-group .public-key,
 .form-group .prev-hash {
   background: #ccc;
   cursor: not-allowed;

@@ -10,6 +10,8 @@ import Distributed from "../pages/Distributed.js";
 import Tokens from "../pages/Tokens.js";
 import axios from "axios";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Keys from "../pages/Keys.js";
+import Signature from "../pages/Signature.js";
 
 const mineURL = "http://localhost:3001/mine";
 const chainURL = "http://localhost:3001/chain";
@@ -62,6 +64,12 @@ function Main() {
             </Route>
             <Route path="/Coinbase">
               <Coinbase coinbase={coinbase} mineTokenURL={mineTokenURL} />
+            </Route>
+            <Route path="/Keys">
+              <Keys />
+            </Route>
+            <Route path="/Signature">
+              <Signature />
             </Route>
             <Route path="/">
               <Hash />

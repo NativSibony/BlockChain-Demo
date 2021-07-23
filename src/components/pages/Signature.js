@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 var EC = require("elliptic").ec;
 var ec = new EC("secp256k1");
 
-function Transaction() {
+function Signature() {
   const [keyPair, setKeyPair] = useState("");
   const [message, setMessage] = useState("");
   const [privateKey, setPrivateKey] = useState("");
@@ -103,4 +103,4 @@ function Transaction() {
   );
 }
 
-export default Transaction;
+export default Signature;
