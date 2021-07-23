@@ -12,6 +12,7 @@ import axios from "axios";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Keys from "../pages/Keys.js";
 import Signature from "../pages/Signature.js";
+import Transaction from "../pages/Transaction.js";
 
 const mineURL = "http://localhost:3001/mine";
 const chainURL = "http://localhost:3001/chain";
@@ -70,6 +71,9 @@ function Main() {
             </Route>
             <Route path="/Signature">
               <Signature />
+            </Route>
+            <Route path="/Transaction">
+              <Transaction />
             </Route>
             <Route path="/">
               <Hash />

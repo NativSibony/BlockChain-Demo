@@ -67,7 +67,7 @@ const Links = () => {
         <li>
           <Link className="link" id="Keys" onClick={handleActive} to="/Keys">
             Keys
-          </Link>
+          </Link>./
         </li>
         <li>
           <Link
@@ -77,6 +77,16 @@ const Links = () => {
             to="/Signature"
           >
             Signature
+          </Link>
+        </li>
+        <li>
+          <Link
+            className="link"
+            id="Transaction"
+            onClick={handleActive}
+            to="/Transaction"
+          >
+            Transaction
           </Link>
         </li>
       </ul>
