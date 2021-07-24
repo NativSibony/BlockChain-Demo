@@ -13,6 +13,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Keys from "../pages/Keys.js";
 import Signature from "../pages/Signature.js";
 import Transaction from "../pages/Transaction.js";
+import FinalBlockchain from "../pages/FinalBlockchain.js";
 
 const mineURL = "http://localhost:3001/mine";
 const chainURL = "http://localhost:3001/chain";
@@ -73,6 +74,9 @@ function Main() {
             </Route>
             <Route path="/Transaction">
               <Transaction />
+            </Route>
+            <Route path="/FinalBlockchain">
+              <FinalBlockchain coinbase={coinbase} mineURL={mineURL} />
             </Route>
             <Route path="/">
               <Hash />

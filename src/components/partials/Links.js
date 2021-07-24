@@ -89,6 +89,16 @@ const Links = () => {
             Transaction
           </Link>
         </li>
+        <li>
+          <Link
+            className="link"
+            id="FinalBlockchain"
+            onClick={handleActive}
+            to="/FinalBlockchain"
+          >
+            Final
+          </Link>
+        </li>
       </ul>
     </nav>
   );
