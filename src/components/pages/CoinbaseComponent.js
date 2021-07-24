@@ -8,7 +8,7 @@ export default function CoinbaseComponent({
   index,
   row,
   coinbase,
-  mineTokenURL,
+  mineURL,
 }) {
   const [hash, setHash] = useState("");
   const [prevHash, setPrevHash] = useState("");
@@ -112,9 +112,9 @@ export default function CoinbaseComponent({
     // console.log(blockNumber, JSON.stringify(blockData), prevHash);
     axios
       .get(
-        `${mineTokenURL}?num=${blockNumber}&data=${JSON.stringify(
+        `${mineURL}?num=${blockNumber}&data=${JSON.stringify(
           blockData
-        )}&prev=${String($("#prev-hash-" + index + "-row-" + row).val())}`
+        )}&prev=${String($("#prev-hash-" + index + "-row-" + row).val())}&coinbase=1`
       )
       .then((res) => {
         const data = res.data;

@@ -4,7 +4,7 @@ import sha256 from "crypto-js/sha256";
 import axios from "axios";
 import $ from "jquery";
 
-export default function TokensComponent({ index, row, tokens, mineTokenURL }) {
+export default function TokensComponent({ index, row, tokens, mineURL }) {
   const [hash, setHash] = useState("");
   const [prevHash, setPrevHash] = useState("");
   const [nonce, setNonce] = useState("");
@@ -107,9 +107,11 @@ export default function TokensComponent({ index, row, tokens, mineTokenURL }) {
     // console.log(blockNumber, JSON.stringify(blockData), prevHash);
     axios
       .get(
-        `${mineTokenURL}?num=${blockNumber}&data=${JSON.stringify(
+        `${mineURL}?num=${blockNumber}&data=${JSON.stringify(
           blockData
-        )}&prev=${String($("#prev-hash-" + index + "-row-" + row).val())}`
+        )}&prev=${String(
+          $("#prev-hash-" + index + "-row-" + row).val()
+        )}&coinbase=1`
       )
       .then((res) => {
         const data = res.data;

@@ -2,7 +2,7 @@ import React from "react";
 import CoinbaseComponent from "./CoinbaseComponent";
 import ClipLoader from "react-spinners/ClipLoader";
 
-function Coinbase({ coinbase, mineTokenURL }) {
+function Coinbase({ coinbase, mineURL }) {
   return (
     <>
       <div className="coinbase">
@@ -13,7 +13,7 @@ function Coinbase({ coinbase, mineTokenURL }) {
                 index={i + 1}
                 row={1}
                 coinbase={c}
-                mineTokenURL={mineTokenURL}
+                mineURL={mineURL}
               />
             </div>
           ))
@@ -31,7 +31,7 @@ function Coinbase({ coinbase, mineTokenURL }) {
                 index={i + 1}
                 row={2}
                 coinbase={c}
-                mineTokenURL={mineTokenURL}
+                mineURL={mineURL}
               />
             </div>
           ))
@@ -47,7 +47,7 @@ function Coinbase({ coinbase, mineTokenURL }) {
                 index={i + 1}
                 row={3}
                 coinbase={c}
-                mineTokenURL={mineTokenURL}
+                mineURL={mineURL}
               />
             </div>
           ))

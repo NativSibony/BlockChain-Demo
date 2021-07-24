@@ -10,6 +10,9 @@ function Transaction() {
   const [publicKey, setPublicKey] = useState("");
   const [signature, setSignature] = useState("");
   const [messageHash, setMessageHash] = useState("");
+  const [amount, setAmount] = useState(20.0);
+  const [to, setTo] = useState("");
+
   const [isBad, setIsBad] = useState(false);
 
   useEffect(() => {
@@ -26,8 +29,21 @@ function Transaction() {
     setPublicKey(keyPair.getPublic("hex"));
   };
 
-  const handleMessage = (e) => {
-    setMessage(e.target.value);
+  const handleAmount = (e) => {
+    setAmount(e.target.value);
+  };
+
+  const handleTo = (e) => {
+    setTo(e.target.value);
+  };
+
+  const handlePublicKey = (e) => {
+    setPublicKey(e.target.value);
+  };
+
+  const handleMessage = () => {
+    let a = [amount, publicKey, to];
+    setMessage(a);
   };
 
   const handleSign = (e) => {
@@ -50,7 +66,7 @@ function Transaction() {
     <div className="content">
       <div className="group column">
         <div className="title">
-          <h4>Public / Private Key Pairs</h4>
+          <h4>Transaction</h4>
         </div>
         <div className={isBad ? "card error" : "card"}>
           <form className="hash-form">
@@ -59,12 +75,32 @@ function Transaction() {
               style={{ minWidth: "600px", minHeight: "200px", rowGap: "5px" }}
             >
               <label>Message</label>
-              <textarea
-                id="signMessage"
-                rows="5"
-                cols="70"
-                onChange={handleMessage}
-              ></textarea>
+              <div className="small-group-group" onChange={handleMessage}>
+                <label className="lbl-gray">$</label>
+                <input
+                  type="number"
+                  name="amount"
+                  className="basic-input"
+                  value={amount}
+                  onChange={handleAmount}
+                ></input>
+                <label className="lbl-gray">From</label>
+                <input
+                  type="text"
+                  name="from"
+                  className="basic-input"
+                  value={publicKey}
+                  onChange={handlePublicKey}
+                ></input>
+                <label className="lbl-gray">To</label>
+                <input
+                  type="text"
+                  name="to"
+                  className="basic-input"
+                  value={to}
+                  onChange={handleTo}
+                ></input>
+              </div>
               <label type="number">Private Key</label>
               <input
                 type="number"
@@ -76,21 +112,14 @@ function Transaction() {
               <button type="submit" className="mine" onClick={handleSign}>
                 Sign
               </button>
-              <label type="number">Public Key</label>
-              <input
-                type="text"
-                className="basic-input"
-                onChange={handleUpdate}
-                placeholder={publicKey}
-                style={{ maxHeight: "40px" }}
-              ></input>
               <label type="number">Signature</label>
               <input
                 type="text"
-                className="basic-input"
+                className="private-key"
                 onChange={handleUpdate}
                 placeholder={messageHash}
                 style={{ maxHeight: "40px" }}
+                disabled
               ></input>
               <button type="submit" className="mine" onClick={handleVerify}>
                 Verify

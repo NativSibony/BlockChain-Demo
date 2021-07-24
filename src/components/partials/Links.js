@@ -67,7 +67,7 @@ const Links = () => {
         <li>
           <Link className="link" id="Keys" onClick={handleActive} to="/Keys">
             Keys
-          </Link>./
+          </Link>
         </li>
         <li>
           <Link

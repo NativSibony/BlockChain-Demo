@@ -17,7 +17,6 @@ import Transaction from "../pages/Transaction.js";
 const mineURL = "http://localhost:3001/mine";
 const chainURL = "http://localhost:3001/chain";
 const tokensURL = "http://localhost:3001/tokens";
-const mineTokenURL = "http://localhost:3001/mineToken";
 const coinbaseURL = "http://localhost:3001/coinbase";
 
 function Main() {
@@ -61,10 +60,10 @@ function Main() {
               <Distributed chain={chain} mineURL={mineURL} />
             </Route>
             <Route path="/Tokens">
-              <Tokens tokens={tokens} mineTokenURL={mineTokenURL} />
+              <Tokens tokens={tokens} mineURL={mineURL} />
             </Route>
             <Route path="/Coinbase">
-              <Coinbase coinbase={coinbase} mineTokenURL={mineTokenURL} />
+              <Coinbase coinbase={coinbase} mineURL={mineURL} />
             </Route>
             <Route path="/Keys">
               <Keys />
