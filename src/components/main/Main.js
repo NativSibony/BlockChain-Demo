@@ -19,11 +19,13 @@ const mineURL = "http://localhost:3001/mine";
 const chainURL = "http://localhost:3001/chain";
 const tokensURL = "http://localhost:3001/tokens";
 const coinbaseURL = "http://localhost:3001/coinbase";
+const finalURL = "http://localhost:3001/final";
 
 function Main() {
   const [chain, setChain] = useState("");
   const [tokens, setTokens] = useState("");
   const [coinbase, setCoinbase] = useState("");
+  const [final, setFinal] = useState("");
 
   useEffect(() => {
     axios.get(`${chainURL}`).then((res) => {
@@ -37,6 +39,10 @@ function Main() {
     axios.get(`${coinbaseURL}`).then((res) => {
       const data = res.data;
       setCoinbase(data.chain);
+    });
+    axios.get(`${finalURL}`).then((res) => {
+      const data = res.data;
+      setFinal(data.chain);
     });
   }, []);
 
@@ -76,7 +82,7 @@ function Main() {
               <Transaction />
             </Route>
             <Route path="/FinalBlockchain">
-              <FinalBlockchain coinbase={coinbase} mineURL={mineURL} />
+              <FinalBlockchain final={final} mineURL={mineURL} />
             </Route>
             <Route path="/">
               <Hash />

@@ -3,31 +3,27 @@ import ClipLoader from "react-spinners/ClipLoader";
 import sha256 from "crypto-js/sha256";
 import axios from "axios";
 import $ from "jquery";
-var EC = require("elliptic").ec;
-var ec = new EC("secp256k1");
 
-function FinalBlockComponent({ index, row, coinbase, mineURL }) {
+export default function FinalBlockchainComponent({
+  index,
+  row,
+  final,
+  mineURL,
+}) {
   const [hash, setHash] = useState("");
   const [prevHash, setPrevHash] = useState("");
   const [nonce, setNonce] = useState("");
   const [blockNumber, setBlockNumber] = useState("");
   const [blockData, setBlockData] = useState("");
-  const [hardcoded, setHardcoded] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setBlockNumber(coinbase.index);
-    setHash(coinbase.hash);
-    setNonce(coinbase.nonce);
-    setPrevHash(coinbase.previousHash);
-    setBlockData(coinbase.data);
-    let a = [];
-    for (let i = 0; i < Object.keys(coinbase).length; i++) {
-      let kp = ec.genKeyPair();
-      a.push(kp.getPublic("hex"));
-    }
-    setHardcoded(a);
-  }, [coinbase]);
+    setBlockNumber(final.index);
+    setHash(final.hash);
+    setNonce(final.nonce);
+    setPrevHash(final.previousHash);
+    setBlockData(final.data);
+  }, [final]);
 
   useEffect(() => {
     setHash(
@@ -55,9 +51,13 @@ function FinalBlockComponent({ index, row, coinbase, mineURL }) {
   };
 
   const handleBlockData = (name, i, value) => {
-    console.log(name, i, value);
     let obj = blockData;
-    obj[i][name] = name === "amount" ? parseInt(value) : value;
+    obj[i][name] =
+      name === "amount"
+        ? parseInt(value)
+        : name === "base"
+        ? parseInt(value)
+        : value;
     setBlockData(obj);
 
     $("#block-data-" + index + "-row-" + row).attr("name", JSON.stringify(obj));
@@ -172,14 +172,7 @@ function FinalBlockComponent({ index, row, coinbase, mineURL }) {
                 >
                   {Object.values(blockData).map((d, i) =>
                     d.amount ? (
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          rowGap: "5px",
-                        }}
-                        key={i}
-                      >
+                      <>
                         <div key={i} className="small-group-group">
                           <label className="lbl-gray">$</label>
                           <input
@@ -195,9 +188,9 @@ function FinalBlockComponent({ index, row, coinbase, mineURL }) {
                             name="from"
                             id={i}
                             className="basic-input"
-                            defaultValue={d.from}
+                            defaultValue={d.base}
                           ></input>
-                          <label className="lbl-gray">To</label>
+                          <label className="lbl-gray">{"->"}</label>
                           <input
                             type="text"
                             name="to"
@@ -206,36 +199,38 @@ function FinalBlockComponent({ index, row, coinbase, mineURL }) {
                             defaultValue={d.to}
                           ></input>
                         </div>
-                        <div key={i + 10} className="small-group-group">
-                          <label className="lbl-gray">Seq</label>
+                        <div className="small-group-group">
+                          <label className="lbl-gray">{"Seq"}</label>
                           <input
                             type="text"
                             name="seq"
+                            id={i}
                             className="basic-input"
-                            defaultValue={1}
+                            defaultValue={d.seq}
                           ></input>
-                          <label className="lbl-gray">Sig</label>
+                          <label className="lbl-gray">{"Sig"}</label>
                           <input
                             type="text"
                             name="sig"
+                            id={i}
                             className="basic-input"
-                            defaultValue={hardcoded[i]}
+                            defaultValue={d.sig}
                           ></input>
                         </div>
-                      </div>
+                      </>
                     ) : (
-                      <div key={i + 20} className="small-group-group">
-                        <label className="lbl-gray">From</label>
-                        <input
-                          type="text"
-                          name="from"
-                          id={i}
-                          className="basic-input"
-                          defaultValue={d.from}
-                        ></input>
-                        <label className="lbl-gray">To</label>
+                      <div key={i} className="small-group-group">
+                        <label className="lbl-gray">$</label>
                         <input
                           type="number"
+                          name="base"
+                          id={i}
+                          className="basic-input"
+                          defaultValue={d.base}
+                        ></input>
+                        <label className="lbl-gray">{"->"}</label>
+                        <input
+                          type="text"
                           name="to"
                           id={i}
                           className="basic-input"
@@ -281,5 +276,3 @@ function FinalBlockComponent({ index, row, coinbase, mineURL }) {
     </div>
   );
 }
-
-export default FinalBlockComponent;

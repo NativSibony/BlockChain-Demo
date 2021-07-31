@@ -4,12 +4,7 @@ import sha256 from "crypto-js/sha256";
 import axios from "axios";
 import $ from "jquery";
 
-export default function CoinbaseComponent({
-  index,
-  row,
-  coinbase,
-  mineURL,
-}) {
+export default function CoinbaseComponent({ index, row, coinbase, mineURL }) {
   const [hash, setHash] = useState("");
   const [prevHash, setPrevHash] = useState("");
   const [nonce, setNonce] = useState("");
@@ -52,7 +47,12 @@ export default function CoinbaseComponent({
 
   const handleBlockData = (name, i, value) => {
     let obj = blockData;
-    obj[i][name] = name === "amount" ? parseInt(value) : value;
+    obj[i][name] =
+      name === "amount"
+        ? parseInt(value)
+        : name === "base"
+        ? parseInt(value)
+        : value;
     setBlockData(obj);
 
     $("#block-data-" + index + "-row-" + row).attr("name", JSON.stringify(obj));
@@ -114,7 +114,9 @@ export default function CoinbaseComponent({
       .get(
         `${mineURL}?num=${blockNumber}&data=${JSON.stringify(
           blockData
-        )}&prev=${String($("#prev-hash-" + index + "-row-" + row).val())}&coinbase=1`
+        )}&prev=${String(
+          $("#prev-hash-" + index + "-row-" + row).val()
+        )}&coinbase=1`
       )
       .then((res) => {
         const data = res.data;
@@ -182,7 +184,7 @@ export default function CoinbaseComponent({
                           className="basic-input"
                           defaultValue={d.from}
                         ></input>
-                        <label className="lbl-gray">To</label>
+                        <label className="lbl-gray">{"->"}</label>
                         <input
                           type="text"
                           name="to"
@@ -193,17 +195,17 @@ export default function CoinbaseComponent({
                       </div>
                     ) : (
                       <div key={i} className="small-group-group">
-                        <label className="lbl-gray">From</label>
-                        <input
-                          type="text"
-                          name="from"
-                          id={i}
-                          className="basic-input"
-                          defaultValue={d.from}
-                        ></input>
-                        <label className="lbl-gray">To</label>
+                        <label className="lbl-gray">$</label>
                         <input
                           type="number"
+                          name="base"
+                          id={i}
+                          className="basic-input"
+                          defaultValue={d.base}
+                        ></input>
+                        <label className="lbl-gray">{"->"}</label>
+                        <input
+                          type="text"
                           name="to"
                           id={i}
                           className="basic-input"

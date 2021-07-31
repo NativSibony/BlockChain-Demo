@@ -2,17 +2,17 @@ import React from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 import FinalBlockComponent from "./FinalBlockchainComponent";
 
-function FinalBlockchain({ coinbase, mineURL }) {
+function FinalBlockchain({ final, mineURL }) {
   return (
     <>
       <div className="coinbase">
-        {coinbase ? (
-          coinbase.map((c, i) => (
+        {final ? (
+          final.map((c, i) => (
             <div key={i}>
               <FinalBlockComponent
                 index={i + 1}
                 row={1}
-                coinbase={c}
+                final={c}
                 mineURL={mineURL}
               />
             </div>
@@ -24,13 +24,13 @@ function FinalBlockchain({ coinbase, mineURL }) {
         )}
       </div>
       <div className="coinbase">
-        {coinbase ? (
-          coinbase.map((c, i) => (
+        {final ? (
+          final.map((c, i) => (
             <div key={i}>
               <FinalBlockComponent
                 index={i + 1}
                 row={2}
-                coinbase={c}
+                final={c}
                 mineURL={mineURL}
               />
             </div>
@@ -40,13 +40,13 @@ function FinalBlockchain({ coinbase, mineURL }) {
         )}
       </div>
       <div className="coinbase">
-        {coinbase ? (
-          coinbase.map((c, i) => (
+        {final ? (
+          final.map((c, i) => (
             <div key={i}>
               <FinalBlockComponent
                 index={i + 1}
                 row={3}
-                coinbase={c}
+                final={c}
                 mineURL={mineURL}
               />
             </div>

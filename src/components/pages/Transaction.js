@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-
 var EC = require("elliptic").ec;
 var ec = new EC("secp256k1");
 
@@ -12,7 +11,6 @@ function Transaction() {
   const [messageHash, setMessageHash] = useState("");
   const [amount, setAmount] = useState(20.0);
   const [to, setTo] = useState("");
-
   const [isBad, setIsBad] = useState(false);
 
   useEffect(() => {
@@ -31,31 +29,39 @@ function Transaction() {
 
   const handleAmount = (e) => {
     setAmount(e.target.value);
+    handleMessage(e.target.value, publicKey, to);
   };
 
   const handleTo = (e) => {
     setTo(e.target.value);
+    handleMessage(amount, publicKey, e.target.value);
   };
 
   const handlePublicKey = (e) => {
     setPublicKey(e.target.value);
+    handleMessage(amount, e.target.value, to);
   };
 
-  const handleMessage = () => {
-    let a = [amount, publicKey, to];
+  const handleMessage = (amount, pKey, to) => {
+    let a = [amount, pKey, to];
     setMessage(a);
   };
 
   const handleSign = (e) => {
-    const s = keyPair.sign(message);
     e.preventDefault();
+    const s = keyPair.sign(message);
+
+    console.log(message, keyPair.sign(message));
+    console.log(Buffer.from(s.toDER()).toString("hex"));
+
     setMessageHash(Buffer.from(s.toDER()).toString("hex"));
     setSignature(s.toDER());
   };
 
   const handleVerify = (e) => {
     e.preventDefault();
-    signature
+    const s = keyPair.sign(message);
+    s.toDER() !== signature
       ? keyPair.verify(message, signature)
         ? setIsBad(false)
         : setIsBad(true)
@@ -75,7 +81,7 @@ function Transaction() {
               style={{ minWidth: "600px", minHeight: "200px", rowGap: "5px" }}
             >
               <label>Message</label>
-              <div className="small-group-group" onChange={handleMessage}>
+              <div className="small-group-group">
                 <label className="lbl-gray">$</label>
                 <input
                   type="number"
@@ -92,10 +98,11 @@ function Transaction() {
                   value={publicKey}
                   onChange={handlePublicKey}
                 ></input>
-                <label className="lbl-gray">To</label>
+                <label className="lbl-gray">{"->"}</label>
                 <input
                   type="text"
                   name="to"
+                  id="to"
                   className="basic-input"
                   value={to}
                   onChange={handleTo}

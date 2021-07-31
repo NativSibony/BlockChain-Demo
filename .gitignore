@@ -24,3 +24,5 @@ yarn-error.log*
 
 autogit.sh
 autoheroku.sh
+
+dev.txt
