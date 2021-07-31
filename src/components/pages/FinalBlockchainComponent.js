@@ -57,6 +57,8 @@ export default function FinalBlockchainComponent({
         ? parseInt(value)
         : name === "base"
         ? parseInt(value)
+        : name === "seq"
+        ? parseInt(value)
         : value;
     setBlockData(obj);
 
@@ -188,7 +190,7 @@ export default function FinalBlockchainComponent({
                             name="from"
                             id={i}
                             className="basic-input"
-                            defaultValue={d.base}
+                            defaultValue={d.from}
                           ></input>
                           <label className="lbl-gray">{"->"}</label>
                           <input
