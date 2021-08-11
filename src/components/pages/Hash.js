@@ -13,6 +13,7 @@ function Hash() {
     let s = sha256(e.target.value).toString();
     setSha(s);
   };
+  
   return (
     <div className="content">
       <div className="group column">

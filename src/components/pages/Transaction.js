@@ -51,8 +51,8 @@ function Transaction() {
     e.preventDefault();
     const s = keyPair.sign(message);
 
-    console.log(message, keyPair.sign(message));
-    console.log(Buffer.from(s.toDER()).toString("hex"));
+    // console.log(message, keyPair.sign(message));
+    // console.log(Buffer.from(s.toDER()).toString("hex"));
 
     setMessageHash(Buffer.from(s.toDER()).toString("hex"));
     setSignature(s.toDER());

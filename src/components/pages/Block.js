@@ -44,7 +44,6 @@ function Block({ mineURL, prev }) {
         parseInt(value) + prev + parseInt(nonce) + JSON.stringify(blockData)
       ).toString();
     }
-    console.log(check);
     if (check.substr(0, 4) !== "0000") setChanging(true);
     else setChanging(false);
   };
